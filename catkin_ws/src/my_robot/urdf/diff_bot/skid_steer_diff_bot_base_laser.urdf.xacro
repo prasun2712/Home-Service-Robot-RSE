@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<robot name="diff_bot"
+    xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- Include all component files -->
+    <xacro:include filename="$(find my_robot)/urdf/materials.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/diff_bot/skid_steer_base.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/diff_bot/accessories/sick_s300.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/diff_bot/accessories/depth_camera.urdf.xacro" />
+
+    <xacro:property name="support1_radius" value="${wheel_radius + 0.13}" />
+    <xacro:property name="support1_length" value="${laser_z - 0.04}" />
+    <xacro:property name="support1_parent" value="base_link" />
+    <xacro:property name="support1_parent_size_z" value="${base_size_z}" />
+    
+    <xacro:property name="plate1_parent" value="base_link_support1_support_link" />
+    <xacro:property name="plate1_parent_size_z" value="${support1_length}" />
+    <xacro:property name="plate1_x" value="${base_size_x}" />
+    <xacro:property name="plate1_y" value="${base_size_y}" />
+    <xacro:property name="plate1_z" value="0.01" />
+
+    <!-- Add sick_s300 lasers -->
+    <xacro:property name="prefix" value="" />
+    <joint name="${prefix}base_link_to_front_left_laser_joint" type="fixed">
+        <parent link="${prefix}base_link" />
+        <child link="${prefix}front_left_laser_link" />
+        <origin xyz="${base_size_x/2 - laser_x/2} ${base_size_y/2 - laser_y/2} ${base_size_z/2 + 0.02}" rpy="0.0 0.0 ${0.25 * pi}" />
+    </joint>
+    <xacro:sick_s300 prefix="${prefix}" link="front_left_laser_link" topic="fl_scan" />
+
+    <joint name="${prefix}base_link_to_back_right_laser_joint" type="fixed">
+        <parent link="${prefix}base_link" />
+        <child link="${prefix}back_right_laser_link" />
+        <origin xyz="-${base_size_x/2 - laser_x/2} -${base_size_y/2 - laser_y/2} ${base_size_z/2 + 0.02}" rpy="0.0 0.0 ${-0.75 * pi}" />
+    </joint>
+    <xacro:sick_s300 prefix="${prefix}" link="back_right_laser_link" topic="br_scan" />
+
+    <xacro:macro name="support" params="parent suffix parent_size_z support_radius support_length color_rviz color_gazebo">
+        <joint name="${parent}_${suffix}_support_joint" type="fixed">
+            <origin xyz="0 0 ${parent_size_z/2 + support_length/2}" rpy="0 0 0" />
+            <parent link="${parent}"/>
+            <child link="${parent}_${suffix}_support_link"/>
+        </joint>
+        <gazebo reference="${parent}_${suffix}_support_link">
+            <material>Gazebo/${color_gazebo}</material>
+        </gazebo>
+        <link name="${parent}_${suffix}_support_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder radius="${support_radius}" length="${support_length}"/>
+                </geometry>
+                <material name="${color_rviz}" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder radius="${support_radius}" length="${support_length}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:support suffix="support1" parent="${support1_parent}" parent_size_z="${support1_parent_size_z}" support_radius="${support1_radius}" support_length="${support1_length}" color_rviz="OffWhite" color_gazebo="WoodPallet" />
+
+    <xacro:macro name="plate" params="parent suffix parent_size_z plate_x plate_y plate_z color_rviz color_gazebo">
+        <joint name="${parent}_${suffix}_plate_joint" type="fixed">
+            <origin xyz="0 0 ${parent_size_z/2 + plate_z/2}" rpy="0 0 0" />
+            <parent link="${parent}"/>
+            <child link="${parent}_${suffix}_plate_link"/>
+        </joint>
+        <gazebo reference="${parent}_${suffix}_plate_link">
+            <material>Gazebo/${color_gazebo}</material>
+        </gazebo>
+        <link name="${parent}_${suffix}_plate_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${plate_x} ${plate_y} ${plate_z}" />
+                </geometry>
+                <material name="${color_rviz}" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${plate_x} ${plate_y} ${plate_z}" />
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:plate parent="${plate1_parent}" suffix="plate1" parent_size_z="${plate1_parent_size_z}" plate_x="${plate1_x}" plate_y="${plate1_y}"
+    plate_z="${plate1_z}" color_rviz="OffWhite" color_gazebo="WoodFloor" />
+
+    <xacro:sensor_kinect parent="${plate1_parent}_plate1_plate_link"/>
+
+</robot>

@@ -1,0 +1,24 @@
+<launch>
+   <!-- AMCL Node -->
+   <node name="amcl" pkg="amcl" type="amcl" output="screen">
+      <remap from="scan" to="scan_multi"/>
+      <!-- <remap from="scan" to="fl_scan"/> -->
+      <param name="odom_frame_id" value="odom"/>
+      <param name="odom_model_type" value="diff"/>
+      <param name="base_frame_id" value="base_footprint"/>
+      <param name="global_frame_id" value="map"/>
+      
+      <!-- If you choose to define initial pose here -->
+      <param name="initial_pose_x" value="0"/>
+      <param name="initial_pose_y" value="0"/>
+      <param name="initial_pose_a" value="-1.5708"/>
+      <param name="update_min_d" value="0.01"/>
+      <param name="update_min_a" value="0.15"/>
+      <param name="transform_tolerance" value="1"/>
+      <param name="max_particles" value="500"/>
+      <param name="odom_alpha1" value="0"/>
+      <param name="odom_alpha2" value="0"/>
+      <param name="odom_alpha3" value="0"/>
+      <param name="odom_alpha4" value="0"/>
+   </node>
+</launch>

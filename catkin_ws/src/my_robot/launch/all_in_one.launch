@@ -1,0 +1,8 @@
+<launch>
+    <include file="$(find my_robot)/launch/world.launch" />
+    <include file="$(find my_robot)/launch/merge_scan.launch" />
+    <include file="$(find my_robot)/launch/map_server.launch" />
+    <include file="$(find my_robot)/launch/amcl.launch" />
+    <include file="$(find my_robot)/launch/move_base.launch" />
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find my_robot)/config/my_conf.rviz" />
+</launch>
