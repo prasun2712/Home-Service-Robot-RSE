@@ -3,7 +3,7 @@
 <launch>
 
     <!-- World File -->
-    <arg name="world_file" default="$(find home_service_robot)/world/turtle_world.world"/>
+    <arg name="world_file" default="$(find home_service_robot)/world/my_world.world"/>
 
     <arg name="robot_namespace" default="diff_bot"/>
     <arg name="x" default="0"/>

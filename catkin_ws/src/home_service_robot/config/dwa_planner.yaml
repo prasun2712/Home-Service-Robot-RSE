@@ -1,0 +1,9 @@
+controller_frequency: 20
+DWAPlannerROS:
+  xy_goal_tolerance: 0.1
+  yaw_goal_tolerance: 0.15
+  min_rot_vel: 0.5
+  path_distance_bias: 1.0
+  goal_distance_bias: 0.8
+  occdist_scale: 0.01
+  cheat_factor: 2
