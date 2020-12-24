@@ -270,14 +270,6 @@ Visualization Manager:
       Topic: /move_base/NavfnROS/plan
       Unreliable: false
       Value: true
-    - Class: rviz/Marker
-      Enabled: true
-      Marker Topic: /object_visualization
-      Name: Marker
-      Namespaces:
-        object_cube: true
-      Queue Size: 100
-      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -314,17 +306,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -7.242090225219727
-        Y: -1.3819955587387085
-        Z: 0.2924981415271759
+        X: -7.092764377593994
+        Y: -1.9666517972946167
+        Z: -0.07519960403442383
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.449796438217163
+      Pitch: 1.2453975677490234
       Target Frame: <Fixed Frame>
-      Yaw: 4.698586463928223
+      Yaw: 4.7085862159729
     Saved: ~
 Window Geometry:
   Displays:
