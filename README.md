@@ -38,6 +38,8 @@ In this project we will use custom built bot as home service robot by using mapp
             * **slam_gmapping** - Submodule, gmapping package to build map of the world.
             * **teleop_twist_keyboard** - Tele-operation package.
     * **images** - Assignment images.
+    * **writeup** - This contains a brief writeup about the ROS packages used in the project.
+        * [README.md](https://github.com/prasun2712/Home-Service-Robot-RSE/tree/main/writeup)
 
 ## Images for assignment
 |World View   | RVIZ View |
